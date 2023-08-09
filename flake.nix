@@ -1,5 +1,5 @@
 {
-  description = "NixOS systems and tools by kongkong";
+  description = "NixOS systems and tools by mitchellh";
 
   inputs = {
     # Pin our primary nixpkgs repository. This is the main nixpkgs repository

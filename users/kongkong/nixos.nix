@@ -7,7 +7,7 @@
   # Since we're using fish as our shell
   programs.fish.enable = true;
 
-  users.users.mitchellh = {
+  users.users.kongkong = {
     isNormalUser = true;
     home = "/home/kongkong";
     extraGroups = [ "docker" "wheel" ];
