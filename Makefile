@@ -48,10 +48,15 @@ cache:
 # NOTE(mitchellh): I'm sure there is a way to do this and bootstrap all
 # in one step but when I tried to merge them I got errors. One day.
 vm/bootstrap0:
+	#parted /dev/sda -- mklabel msdos; \
+	#parted /dev/sda -- mkpart primary 1MB -8GB; \
+	#parted /dev/sda -- set 1 boot on; \
+	#parted /dev/sda -- mkpart primary linux-swap -8GB 100%; \
+	#nix.settings.substituters = [\"https://mirrors.ustc.edu.cn/nix-channels/store\"];\n \
 	ssh $(SSH_OPTIONS) -p$(NIXPORT) root@$(NIXADDR) " \
 		parted /dev/sda -- mklabel gpt; \
 		parted /dev/sda -- mkpart primary 512MB -8GB; \
-		parted /dev/sda -- mkpart primary linux-swap -8GB 100\%; \
+		parted /dev/sda -- mkpart primary linux-swap -8GB 100%; \
 		parted /dev/sda -- mkpart ESP fat32 1MB 512MB; \
 		parted /dev/sda -- set 3 esp on; \
 		sleep 1; \
