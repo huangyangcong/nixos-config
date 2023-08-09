@@ -39,7 +39,7 @@
   networking.hostName = "dev";
 
   # Set your time zone.
-  time.timeZone = "America/Los_Angeles";
+  time.timeZone = "Asia/Shanghai";
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
@@ -53,7 +53,11 @@
   virtualisation.docker.enable = true;
 
   # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.defaultLocale = "zh_CN.UTF-8";
+  i18n.inputMethod = {
+    enabled = "ibus";
+    ibus.engines = with pkgs.ibus-engines; [ libpinyin ];
+  };
 
   # setup windowing environment
   services.xserver = {
