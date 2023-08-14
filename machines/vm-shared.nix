@@ -18,6 +18,7 @@
     # since the data inside is checksummed.
     settings = {
       substituters = ["https://mitchellh-nixos-config.cachix.org"];
+      #substituters = ["https://mirrors.ustc.edu.cn/nix-channels/store"];
       trusted-public-keys = ["mitchellh-nixos-config.cachix.org-1:bjEbXJyLrL1HZZHBbO4QALnI5faYZppzkU4D2s0G8RQ="];
     };
   };
@@ -63,7 +64,7 @@
   services.xserver = {
     enable = true;
     layout = "us";
-    dpi = 220;
+    dpi = 125;
 
     desktopManager = {
       xterm.enable = false;
@@ -104,10 +105,15 @@
   # fonts require a purchase.
   fonts = {
     fontDir.enable = true;
-
-    fonts = [
-      pkgs.fira-code
-    ];
+	enableDefaultFonts = true;
+	fonts = with pkgs; [
+		(nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
+	];
+	fontconfig = {
+		defaultFonts = {
+			monospace = [ "FiraCode Nerd Font" ];
+		};
+	};
   };
 
   # List packages installed in system profile. To search, run:

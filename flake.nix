@@ -32,6 +32,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+	# Rust toolchain.
+    rust-overlay.url = "github:oxalica/rust-overlay";
     # Other packages
     zig.url = "github:mitchellh/zig-overlay";
   };
@@ -44,7 +46,8 @@
     overlays = [
       inputs.neovim-nightly-overlay.overlay
       inputs.zig.overlays.default
-    ];
+	  inputs.rust-overlay.overlays.default
+	];
   in {
     nixosConfigurations.vm-aarch64 = mkVM "vm-aarch64" {
       inherit nixpkgs home-manager;

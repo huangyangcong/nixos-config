@@ -4,7 +4,6 @@ let
   sources = import ../../nix/sources.nix;
   isDarwin = pkgs.stdenv.isDarwin;
   isLinux = pkgs.stdenv.isLinux;
-
   # For our MANPAGER env var
   # https://github.com/sharkdp/bat/issues/1145
   manpager = (pkgs.writeShellScriptBin "manpager" (if isDarwin then ''
@@ -13,6 +12,9 @@ let
     cat "$1" | col -bx | bat --language man --style plain
   ''));
 in {
+  imports = [
+	../../home-manager/lazyvim/lazyvim.nix
+  ];
   # Home-manager 22.11 requires this be set. We never set it so we have
   # to use the old state version.
   home.stateVersion = "18.09";
@@ -27,6 +29,7 @@ in {
   # per-project flakes sourced with direnv and nix-shell, so this is
   # not a huge list.
   home.packages = [
+	# tools
     pkgs.bat
     pkgs.fd
     pkgs.fzf
@@ -35,12 +38,69 @@ in {
     pkgs.ripgrep
     pkgs.tree
     pkgs.watch
+	pkgs.zoxide
+	pkgs.unzip
+    pkgs.zip
 
-    pkgs.gopls
     pkgs.zigpkgs.master
 
-    # Node is required for Copilot.vim
-    pkgs.nodejs
+	pkgs.neovim
+	pkgs.gcc
+
+	# JavaScript / TypeScript programming language
+	pkgs.deno
+	pkgs.nodePackages.pnpm
+	pkgs.nodePackages.yarn
+	pkgs.nodejs
+	pkgs.esbuild
+	pkgs.k6 # Load testing: https://github.com/grafana/k6
+
+	#python
+	#pkgs.python27Full
+	#pkgs.python3
+
+	#java
+	pkgs.openjdk17
+
+	# Rust programming language
+   (pkgs.rust-bin.stable.latest.default.override {
+      extensions = [ "rust-src" "rustfmt" ];
+    })
+
+	# Go programming language
+	pkgs.go
+	pkgs.gopkgs
+	pkgs.gopls
+	pkgs.go-tools
+
+	# DevOps & Kubernetes
+    # pkgs.colima # Docker on Linux on Max: Replaces Docker Desktop
+    pkgs.docker-buildx
+    pkgs.docker-client
+    pkgs.docker-compose
+    pkgs.docker-credential-helpers # Safely store docker credentials: https://github.com/docker/docker-credential-helpers
+    pkgs.docker-ls # Query docker registries https://github.com/mayflower/docker-ls
+    # pkgs.dive # Analyze each layer in a Docker image - seems to be broken. Use `docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock jauderho/dive:latest ...` instead.
+    pkgs.pssh # Parallel SSH
+    pkgs.lnav # Log file viewer https://lnav.org/
+    pkgs.minikube
+    pkgs.nimbo # https://github.com/nimbo-sh/nimbo
+    # pkgs.niv
+    # pkgs.nixopsUnstable
+    pkgs.awscli
+    pkgs.cloudflared # https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/run-tunnel/trycloudflare (cloudflared tunnel --url http://localhost:7000)
+    # unstable.copilot-cli # aws-copilot: https://aws.github.io/copilot-cli/docs/overview/
+    pkgs.k9s
+    pkgs.kubectl
+    pkgs.kubetail
+    pkgs.lorri
+    # pkgs.helm
+    pkgs.mkcert
+    pkgs.rancher
+    pkgs.step-ca
+    pkgs.step-cli # https://github.com/smallstep/cli
+    pkgs.terraform
+    pkgs.telepresence2
 
     (pkgs.python3.withPackages (p: with p; [
       ipython
@@ -72,22 +132,24 @@ in {
 
   home.file.".gdbinit".source = ./gdbinit;
   home.file.".inputrc".source = ./inputrc;
+  home.file.".pip/pip.conf".source = ../../home-manager/python/pip.conf;
 
   xdg.configFile."i3/config".text = builtins.readFile ./i3;
   xdg.configFile."rofi/config.rasi".text = builtins.readFile ./rofi;
   xdg.configFile."devtty/config".text = builtins.readFile ./devtty;
 
+
   # Rectangle.app. This has to be imported manually using the app.
   xdg.configFile."rectangle/RectangleConfig.json".text = builtins.readFile ./RectangleConfig.json;
 
   # tree-sitter parsers
-  xdg.configFile."nvim/parser/proto.so".source = "${pkgs.tree-sitter-proto}/parser";
-  xdg.configFile."nvim/queries/proto/folds.scm".source =
-    "${sources.tree-sitter-proto}/queries/folds.scm";
-  xdg.configFile."nvim/queries/proto/highlights.scm".source =
-    "${sources.tree-sitter-proto}/queries/highlights.scm";
-  xdg.configFile."nvim/queries/proto/textobjects.scm".source =
-    ./textobjects.scm;
+ # xdg.configFile."nvim/parser/proto.so".source = "${pkgs.tree-sitter-proto}/parser";
+ # xdg.configFile."nvim/queries/proto/folds.scm".source =
+ #   "${sources.tree-sitter-proto}/queries/folds.scm";
+ # xdg.configFile."nvim/queries/proto/highlights.scm".source =
+ #   "${sources.tree-sitter-proto}/queries/highlights.scm";
+ # xdg.configFile."nvim/queries/proto/textobjects.scm".source =
+ #   ./textobjects.scm;
 
   #---------------------------------------------------------------------
   # Programs
@@ -252,57 +314,6 @@ in {
       "wireless _first_".enable = false;
       "battery all".enable = false;
     };
-  };
-
-  programs.neovim = {
-    enable = true;
-    package = pkgs.neovim-nightly;
-
-    withPython3 = true;
-    extraPython3Packages = (p: with p; [
-      # For nvim-magma
-      jupyter-client
-      cairosvg
-      plotly
-      #pnglatex
-      #kaleido
-    ]);
-
-    plugins = with pkgs; [
-      customVim.vim-copilot
-      customVim.vim-cue
-      customVim.vim-fish
-      customVim.vim-fugitive
-      customVim.vim-glsl
-      customVim.vim-misc
-      customVim.vim-pgsql
-      customVim.vim-tla
-      customVim.vim-zig
-      customVim.pigeon
-      customVim.AfterColors
-
-      customVim.vim-devicons
-      customVim.vim-nord
-      customVim.nvim-comment
-      customVim.nvim-lspconfig
-      customVim.nvim-plenary # required for telescope
-      customVim.nvim-telescope
-      customVim.nvim-treesitter
-      customVim.nvim-treesitter-playground
-      customVim.nvim-treesitter-textobjects
-      customVim.nvim-magma
-
-      vimPlugins.vim-airline
-      vimPlugins.vim-airline-themes
-      vimPlugins.vim-eunuch
-      vimPlugins.vim-gitgutter
-
-      vimPlugins.vim-markdown
-      vimPlugins.vim-nix
-      vimPlugins.typescript-vim
-    ];
-
-    extraConfig = (import ./vim-config.nix) { inherit sources; };
   };
 
   services.gpg-agent = {
