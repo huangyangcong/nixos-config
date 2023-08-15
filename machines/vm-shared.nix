@@ -1,4 +1,4 @@
-{ config, pkgs, lib, currentSystem, currentSystemName,... }:
+{ config, pkgs, lib, currentSystem, currentSystemName, ... }:
 
 {
   # Be careful updating this.
@@ -17,9 +17,9 @@
     # this, use your own, or toss it. Its typically safe to use a binary cache
     # since the data inside is checksummed.
     settings = {
-      substituters = ["https://mitchellh-nixos-config.cachix.org"];
+      substituters = [ "https://mitchellh-nixos-config.cachix.org" ];
       #substituters = ["https://mirrors.ustc.edu.cn/nix-channels/store"];
-      trusted-public-keys = ["mitchellh-nixos-config.cachix.org-1:bjEbXJyLrL1HZZHBbO4QALnI5faYZppzkU4D2s0G8RQ="];
+      trusted-public-keys = [ "mitchellh-nixos-config.cachix.org-1:bjEbXJyLrL1HZZHBbO4QALnI5faYZppzkU4D2s0G8RQ=" ];
     };
   };
 
@@ -105,15 +105,15 @@
   # fonts require a purchase.
   fonts = {
     fontDir.enable = true;
-	enableDefaultFonts = true;
-	fonts = with pkgs; [
-		(nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
-	];
-	fontconfig = {
-		defaultFonts = {
-			monospace = [ "FiraCode Nerd Font" ];
-		};
-	};
+    enableDefaultFonts = true;
+    fonts = with pkgs; [
+      (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
+    ];
+    fontconfig = {
+      defaultFonts = {
+        monospace = [ "FiraCode Nerd Font" ];
+      };
+    };
   };
 
   # List packages installed in system profile. To search, run:

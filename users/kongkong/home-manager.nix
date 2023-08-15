@@ -8,12 +8,13 @@ let
   # https://github.com/sharkdp/bat/issues/1145
   manpager = (pkgs.writeShellScriptBin "manpager" (if isDarwin then ''
     sh -c 'col -bx | bat -l man -p'
-    '' else ''
+  '' else ''
     cat "$1" | col -bx | bat --language man --style plain
   ''));
-in {
+in
+{
   imports = [
-	../../home-manager/lazyvim/lazyvim.nix
+    ../../home-manager/lazyvim/lazyvim.nix
   ];
   # Home-manager 22.11 requires this be set. We never set it so we have
   # to use the old state version.
@@ -29,7 +30,7 @@ in {
   # per-project flakes sourced with direnv and nix-shell, so this is
   # not a huge list.
   home.packages = [
-	# tools
+    # tools
     pkgs.bat
     pkgs.fd
     pkgs.fzf
@@ -38,44 +39,44 @@ in {
     pkgs.ripgrep
     pkgs.tree
     pkgs.watch
-	pkgs.zoxide
-	pkgs.unzip
+    pkgs.zoxide
+    pkgs.unzip
     pkgs.zip
 
     pkgs.zigpkgs.master
 
-	pkgs.lazygit
+    pkgs.lazygit
 
-	pkgs.neovim
-	pkgs.gcc
+    pkgs.neovim
+    pkgs.gcc
 
-	# JavaScript / TypeScript programming language
-	pkgs.deno
-	pkgs.nodePackages.pnpm
-	pkgs.nodePackages.yarn
-	pkgs.nodejs
-	pkgs.esbuild
-	pkgs.k6 # Load testing: https://github.com/grafana/k6
+    # JavaScript / TypeScript programming language
+    pkgs.deno
+    pkgs.nodePackages.pnpm
+    pkgs.nodePackages.yarn
+    pkgs.nodejs
+    pkgs.esbuild
+    pkgs.k6 # Load testing: https://github.com/grafana/k6
 
-	#python
-	#pkgs.python27Full
-	#pkgs.python3
+    #python
+    #pkgs.python27Full
+    #pkgs.python3
 
-	#java
-	pkgs.openjdk17
+    #java
+    pkgs.openjdk17
 
-	# Rust programming language
-   (pkgs.rust-bin.stable.latest.default.override {
+    # Rust programming language
+    (pkgs.rust-bin.stable.latest.default.override {
       extensions = [ "rust-src" "rustfmt" ];
     })
 
-	# Go programming language
-	pkgs.go
-	pkgs.gopkgs
-	pkgs.gopls
-	pkgs.go-tools
+    # Go programming language
+    pkgs.go
+    pkgs.gopkgs
+    pkgs.gopls
+    pkgs.go-tools
 
-	# DevOps & Kubernetes
+    # DevOps & Kubernetes
     # pkgs.colima # Docker on Linux on Max: Replaces Docker Desktop
     pkgs.docker-buildx
     pkgs.docker-client
@@ -145,13 +146,13 @@ in {
   xdg.configFile."rectangle/RectangleConfig.json".text = builtins.readFile ./RectangleConfig.json;
 
   # tree-sitter parsers
- # xdg.configFile."nvim/parser/proto.so".source = "${pkgs.tree-sitter-proto}/parser";
- # xdg.configFile."nvim/queries/proto/folds.scm".source =
- #   "${sources.tree-sitter-proto}/queries/folds.scm";
- # xdg.configFile."nvim/queries/proto/highlights.scm".source =
- #   "${sources.tree-sitter-proto}/queries/highlights.scm";
- # xdg.configFile."nvim/queries/proto/textobjects.scm".source =
- #   ./textobjects.scm;
+  # xdg.configFile."nvim/parser/proto.so".source = "${pkgs.tree-sitter-proto}/parser";
+  # xdg.configFile."nvim/queries/proto/folds.scm".source =
+  #   "${sources.tree-sitter-proto}/queries/folds.scm";
+  # xdg.configFile."nvim/queries/proto/highlights.scm".source =
+  #   "${sources.tree-sitter-proto}/queries/highlights.scm";
+  # xdg.configFile."nvim/queries/proto/textobjects.scm".source =
+  #   ./textobjects.scm;
 
   #---------------------------------------------------------------------
   # Programs
@@ -161,7 +162,7 @@ in {
 
   programs.bash = {
     enable = true;
-    shellOptions = [];
+    shellOptions = [ ];
     historyControl = [ "ignoredups" "ignorespace" ];
     initExtra = builtins.readFile ./bashrc;
 
@@ -178,17 +179,17 @@ in {
     };
   };
 
-  programs.direnv= {
+  programs.direnv = {
     enable = true;
 
     config = {
       whitelist = {
-        prefix= [
+        prefix = [
           "$HOME/code/go/src/github.com/hashicorp"
           "$HOME/code/go/src/github.com/kongkong"
         ];
 
-        exact = ["$HOME/.envrc"];
+        exact = [ "$HOME/.envrc" ];
       };
     };
   };
@@ -218,12 +219,13 @@ in {
       # that I'm just going to keep it consistent.
       pbcopy = "xclip";
       pbpaste = "xclip -o";
-    } else {});
+    } else { });
 
-    plugins = map (n: {
-      name = n;
-      src  = sources.${n};
-    }) [
+    plugins = map
+      (n: {
+        name = n;
+        src = sources.${n};
+      }) [
       "fish-fzf"
       "fish-foreign-env"
       "theme-bobthefish"
@@ -333,7 +335,7 @@ in {
   home.pointerCursor = lib.mkIf isLinux {
     name = "Vanilla-DMZ";
     package = pkgs.vanilla-dmz;
-    size = 99;
+    size = 40;
     x11.enable = true;
   };
 }
