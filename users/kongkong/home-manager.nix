@@ -44,6 +44,8 @@ in {
 
     pkgs.zigpkgs.master
 
+	pkgs.lazygit
+
 	pkgs.neovim
 	pkgs.gcc
 
@@ -233,7 +235,7 @@ in {
     userName = "Mitchell Hashimoto";
     userEmail = "mitchell.hashimoto@gmail.com";
     signing = {
-      key = "523D5DC389D273BC";
+      key = "71DB4C11DE1F7FEB";
       signByDefault = true;
     };
     aliases = {
@@ -331,7 +333,7 @@ in {
   home.pointerCursor = lib.mkIf isLinux {
     name = "Vanilla-DMZ";
     package = pkgs.vanilla-dmz;
-    size = 128;
+    size = 99;
     x11.enable = true;
   };
 }
