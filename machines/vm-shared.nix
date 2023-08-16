@@ -53,11 +53,25 @@
   # Virtualization settings
   virtualisation.docker.enable = true;
 
+  environment.variables = {
+    GLFW_IM_MODULE = "ibus"; # Ibus & Fcitx5 solution..
+  };
+
   # Select internationalisation properties.
-  i18n.defaultLocale = "zh_CN.UTF-8";
-  i18n.inputMethod = {
-    enabled = "ibus";
-    ibus.engines = with pkgs.ibus-engines; [ libpinyin ];
+  #i18n.defaultLocale = "zh_CN.UTF-8";
+  #i18n.inputMethod = {
+  #  enabled = "ibus";
+  #  ibus.engines = with pkgs.ibus-engines; [ libpinyin rime ];
+  #};
+  i18n = {
+    defaultLocale = "zh_CN.UTF-8";
+    inputMethod = {
+      enabled = "fcitx5";
+      fcitx5.addons = with pkgs; [
+        fcitx5-rime
+        fcitx5-chinese-addons
+      ];
+    };
   };
 
   # setup windowing environment
@@ -65,10 +79,12 @@
     enable = true;
     layout = "us";
     dpi = 125;
-
+    # Unlock auto unlock gnome-keyring for i3 and other WMs that don't use a display manager
+    updateDbusEnvironment = true;
     desktopManager = {
       xterm.enable = false;
       wallpaper.mode = "fill";
+      runXdgAutostartIfNone = true; # handle XDG autostart (eg. input method)
     };
 
     displayManager = {
@@ -161,5 +177,5 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "20.09"; # Did you read the comment?
+  system.stateVersion = "23.05"; # Did you read the comment?
 }

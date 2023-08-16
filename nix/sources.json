@@ -5,10 +5,10 @@
         "homepage": null,
         "owner": "huangyangcong",
         "repo": "LazyVim",
-        "rev": "c60f07f86a3b3acf5927eb7070e86312309aa0c6",
-        "sha256": "1ci32pnv4084jvb83vwnflij30b0c77x9nsib2jqz176pki54nwv",
+        "rev": "f5268787ecd93eff78a967565ff018c751558eab",
+        "sha256": "05ixil9r2m9p1w9xa3ld0ap2jwr6av5gwrvc7kqpddspskczdg9w",
         "type": "tarball",
-        "url": "https://github.com/huangyangcong/LazyVim/archive/c60f07f86a3b3acf5927eb7070e86312309aa0c6.tar.gz",
+        "url": "https://github.com/huangyangcong/LazyVim/archive/f5268787ecd93eff78a967565ff018c751558eab.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "fish-foreign-env": {

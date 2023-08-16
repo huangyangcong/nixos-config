@@ -76,6 +76,9 @@ in
     pkgs.gopls
     pkgs.go-tools
 
+    #solc
+    pkgs.solc
+
     # DevOps & Kubernetes
     # pkgs.colima # Docker on Linux on Max: Replaces Docker Desktop
     pkgs.docker-buildx
