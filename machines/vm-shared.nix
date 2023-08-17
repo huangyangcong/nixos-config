@@ -64,12 +64,11 @@
   #  ibus.engines = with pkgs.ibus-engines; [ libpinyin rime ];
   #};
   i18n = {
-    defaultLocale = "zh_CN.UTF-8";
+    defaultLocale = "en_US.UTF-8";
     inputMethod = {
       enabled = "fcitx5";
       fcitx5.addons = with pkgs; [
         fcitx5-rime
-        fcitx5-chinese-addons
       ];
     };
   };
@@ -78,12 +77,12 @@
   services.xserver = {
     enable = true;
     layout = "us";
-    dpi = 125;
+    dpi = 220;
     # Unlock auto unlock gnome-keyring for i3 and other WMs that don't use a display manager
     updateDbusEnvironment = true;
     desktopManager = {
       xterm.enable = false;
-      wallpaper.mode = "fill";
+      wallpaper.mode = "fill"; # scale or fill
       runXdgAutostartIfNone = true; # handle XDG autostart (eg. input method)
     };
 

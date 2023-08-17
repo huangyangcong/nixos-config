@@ -136,6 +136,14 @@ in
     MANPAGER = "${manpager}/bin/manpager";
   };
 
+  # every time fcitx5 switch input method, it will modify ~/.config/fcitx5/profile file,
+  # which will override my config managed by home-manager
+  # so we need to remove it before everytime we rebuild the config
+  home.activation.removeExistingFcitx5Profile = lib.hm.dag.entryBefore [ "checkLinkTargets" ] ''
+    rm -f "${config.xdg.configHome}/fcitx5/profile"
+    rm -f "${config.xdg.configHome}/fcitx5/config"
+  '';
+
   home.file.".gdbinit".source = ./gdbinit;
   home.file.".inputrc".source = ./inputrc;
   home.file.".pip/pip.conf".source = ../../home-manager/python/pip.conf;
@@ -144,6 +152,8 @@ in
   xdg.configFile."rofi/config.rasi".text = builtins.readFile ./rofi;
   xdg.configFile."devtty/config".text = builtins.readFile ./devtty;
 
+  xdg.configFile."fcitx5/profile".text = builtins.readFile ../../home-manager/fcitx5/profile;
+  xdg.configFile."fcitx5/config".text = builtins.readFile ../../home-manager/fcitx5/config;
 
   # Rectangle.app. This has to be imported manually using the app.
   xdg.configFile."rectangle/RectangleConfig.json".text = builtins.readFile ./RectangleConfig.json;
@@ -237,8 +247,8 @@ in
 
   programs.git = {
     enable = true;
-    userName = "Mitchell Hashimoto";
-    userEmail = "mitchell.hashimoto@gmail.com";
+    userName = "YangCongHuang";
+    userEmail = "huangyangcong@gmail.com";
     signing = {
       key = "71DB4C11DE1F7FEB";
       signByDefault = true;
@@ -338,7 +348,7 @@ in
   home.pointerCursor = lib.mkIf isLinux {
     name = "Vanilla-DMZ";
     package = pkgs.vanilla-dmz;
-    size = 40;
+    size = 128;
     x11.enable = true;
   };
 }

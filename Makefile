@@ -121,6 +121,10 @@ vm/switch:
 		sudo NIXPKGS_ALLOW_INSECURE=1 NIXPKGS_ALLOW_UNFREE=1 NIXPKGS_ALLOW_UNSUPPORTED_SYSTEM=1 nixos-rebuild --option substituters https://mirrors.ustc.edu.cn/nix-channels/store --impure switch --flake \"/nix-config#${NIXNAME}\" \
 	"
 
+vm/cs:
+	NIXADDR=192.168.182.129 $(MAKE) vm/copy
+	NIXADDR=192.168.182.129 $(MAKE) vm/switch
+
 # Build an ISO image
 iso/nixos.iso:
 	cd iso; ./build.sh
