@@ -14,9 +14,9 @@ cursor:
   style: Block
 
 font:
-  size: 13.0
+  size: 7.0
   normal:
-    family: "Monaco for Powerline"
+    family: "FiraCode Nerd Font"
 
 key_bindings:
   - { key: K, mods: Command, action: ClearHistory }
@@ -46,4 +46,3 @@ key_bindings:
   #- { key: F,              mods: Command|Control,    action: ToggleFullscreen }
   #- { key: F,              mods: Command,            action: SearchForward    }
   #- { key: B,              mods: Command,            action: SearchBackward   }
-

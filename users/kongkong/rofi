@@ -1,6 +1,6 @@
 configuration {
   dpi: 220;
-  font: "Monaco for Powerline 12";
+  font: "FiraCode Nerd Font 7";
 }
 
 * {

@@ -5,10 +5,10 @@
         "homepage": null,
         "owner": "huangyangcong",
         "repo": "LazyVim",
-        "rev": "5b50d6e072be26c327a1848d7de12e1b7aaa7c0a",
-        "sha256": "0181d2knv3gldf22zajvywjzrr8ccry3cvq2mr7na2kn56am1x3n",
+        "rev": "d09fd243dd320110e285a95a35d044688f4e0d0e",
+        "sha256": "1qh89pnf242dqry3h4zl7shl8r0sj3d1m2kqxj1vrnkdgyin6k93",
         "type": "tarball",
-        "url": "https://github.com/huangyangcong/LazyVim/archive/5b50d6e072be26c327a1848d7de12e1b7aaa7c0a.tar.gz",
+        "url": "https://github.com/huangyangcong/LazyVim/archive/d09fd243dd320110e285a95a35d044688f4e0d0e.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "fish-foreign-env": {
@@ -33,6 +33,18 @@
         "sha256": "0kz057nr07ybh0y06ww3p424rgk8pi84pnch9jzb040qqn9a8823",
         "type": "tarball",
         "url": "https://github.com/jethrokuan/fzf/archive/24f4739fc1dffafcc0da3ccfbbd14d9c7d31827a.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "fzf.fish": {
+        "branch": "main",
+        "description": "🔍🐟 Fzf plugin for Fish",
+        "homepage": "",
+        "owner": "PatrickF1",
+        "repo": "fzf.fish",
+        "rev": "6d00ecc6e5b2b1313cfcb25515941ecfd5342b30",
+        "sha256": "1sd5f6707hys6dibs1zb6f1imlkspqad5i24j4gf7lk9cby0zh6i",
+        "type": "tarball",
+        "url": "https://github.com/PatrickF1/fzf.fish/archive/6d00ecc6e5b2b1313cfcb25515941ecfd5342b30.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "go": {

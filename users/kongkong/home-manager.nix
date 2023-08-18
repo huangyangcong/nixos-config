@@ -239,7 +239,8 @@ in
         name = n;
         src = sources.${n};
       }) [
-      "fish-fzf"
+      # "fish-fzf"
+      "fzf.fish"
       "fish-foreign-env"
       "theme-bobthefish"
     ];
@@ -348,7 +349,7 @@ in
   home.pointerCursor = lib.mkIf isLinux {
     name = "Vanilla-DMZ";
     package = pkgs.vanilla-dmz;
-    size = 128;
+    size = 58;
     x11.enable = true;
   };
 }
