@@ -42,10 +42,10 @@ in
     pkgs.zoxide
     pkgs.unzip
     pkgs.zip
+    pkgs.dust
+    pkgs.openvpn
 
     pkgs.zigpkgs.master
-
-    pkgs.lazygit
 
     pkgs.neovim
     pkgs.gcc
@@ -244,6 +244,19 @@ in
       "fish-foreign-env"
       "theme-bobthefish"
     ];
+  };
+
+  programs.lazygit = {
+    enable = true;
+    settings = {
+      git = {
+        paging = {
+          colorArg = "always";
+          pager = "delta --dark --paging=never";
+        };
+        overrideGpg = true;
+      };
+    };
   };
 
   programs.git = {
