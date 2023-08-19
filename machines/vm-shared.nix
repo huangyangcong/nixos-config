@@ -77,7 +77,7 @@
   services.xserver = {
     enable = true;
     layout = "us";
-    dpi = 220;
+    dpi = 125;
     # Unlock auto unlock gnome-keyring for i3 and other WMs that don't use a display manager
     updateDbusEnvironment = true;
     desktopManager = {

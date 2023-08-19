@@ -252,7 +252,7 @@ in
       git = {
         paging = {
           colorArg = "always";
-          pager = "${pkgs.delta}/bin/delta --dark --paging=never";
+          #pager = "${pkgs.delta}/bin/delta --dark --paging=never";
         };
         overrideGpg = true;
       };
@@ -320,7 +320,7 @@ in
         { key = "C"; mods = "Command"; action = "Copy"; }
         { key = "Key0"; mods = "Command"; action = "ResetFontSize"; }
         { key = "Equals"; mods = "Command"; action = "IncreaseFontSize"; }
-        { key = "Subtract"; mods = "Command"; action = "DecreaseFontSize"; }
+        { key = "NumpadSubtract"; mods = "Command"; action = "DecreaseFontSize"; }
       ];
     };
   };
