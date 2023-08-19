@@ -42,7 +42,7 @@ in
     pkgs.zoxide
     pkgs.unzip
     pkgs.zip
-    pkgs.dust
+    #pkgs.dust
     pkgs.openvpn
 
     pkgs.zigpkgs.master
@@ -252,7 +252,7 @@ in
       git = {
         paging = {
           colorArg = "always";
-          pager = "delta --dark --paging=never";
+          pager = "${pkgs.delta}/bin/delta --dark --paging=never";
         };
         overrideGpg = true;
       };

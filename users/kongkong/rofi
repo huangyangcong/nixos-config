@@ -1,124 +1,230 @@
-configuration {
-  dpi: 220;
-  font: "FiraCode Nerd Font 7";
+/* ==========================================================================
+   Rofi color theme
+
+   Based on the Gruvbox color scheme for Vim by morhetz
+   https://github.com/morhetz/gruvbox
+
+   File: gruvbox-dark.rasi
+   Desc: Gruvbox dark color theme for Rofi
+   Author: bardisty <b@bah.im>
+   Source: https://github.com/bardisty/gruvbox-rofi
+   Modified: Mon Feb 12 2018 04:08:43 PST -0800
+   ========================================================================== */
+
+configuration{
+    modi: "run,drun,window";
+    icon-theme: "Oranchelo";
+    show-icons: true;
+    terminal: "alacritty";
+    drun-display-format: "{icon} {name}";
+    location: 0;
+    disable-history: false;
+    hide-scrollbar: true;
+    display-drun: "   Apps ";
+    display-run: "   Run ";
+    display-window: "   Window";
+    display-Network: " 󰤨  Network";
+    sidebar-mode: true;
 }
 
 * {
-    foreground: #f8f8f2;
-    background-color: #282a36;
-    active-background: #6272a4;
-    urgent-background: #ff5555;
-    selected-background: @active-background;
-    selected-urgent-background: @urgent-background;
-    selected-active-background: @active-background;
-    separatorcolor: @active-background;
-    bordercolor: @active-background;
+    /* Theme settings */
+    highlight: bold italic;
+    scrollbar: true;
+
+    /* Gruvbox dark colors */
+    gruvbox-dark-bg0:          #303446;
+    gruvbox-dark-bg0-soft:     #303446;
+    gruvbox-dark-bg3:          #303446;
+    gruvbox-dark-fg0:          #e78284;
+    gruvbox-dark-fg1:          #c6d0f5;
+    gruvbox-dark-red-dark:     #cc241d;
+    gruvbox-dark-red-light:    #fb4934;
+    gruvbox-dark-yellow-dark:  #d79921;
+    gruvbox-dark-yellow-light: #fabd2f;
+    gruvbox-dark-gray:         #737994;
+    gruvbox-dark-blue:         #8caaee;
+
+    /* Theme colors */
+    background:                  @gruvbox-dark-bg0;
+    background-color:            @background;
+    foreground:                  @gruvbox-dark-fg1;
+    border-color:                @gruvbox-dark-bg0;
+    separatorcolor:              @border-color;
+    scrollbar-handle:            @border-color;
+
+    button-background:           @background;
+    button-foreground:           @gruvbox-dark-gray;
+    selected-button-background:  @gruvbox-dark-blue;
+    selected-button-foreground:  @gruvbox-dark-blue;
+
+    normal-background:           @background;
+    normal-foreground:           @foreground;
+    alternate-normal-background: @gruvbox-dark-bg0-soft;
+    alternate-normal-foreground: @foreground;
+    selected-normal-background:  @gruvbox-dark-bg3;
+    selected-normal-foreground:  @gruvbox-dark-fg0;
+
+    active-background:           @gruvbox-dark-gray;
+    active-foreground:           @background;
+    alternate-active-background: @active-background;
+    alternate-active-foreground: @active-foreground;
+    selected-active-background:  @gruvbox-dark-gray;
+    selected-active-foreground:  @active-foreground;
+
+    urgent-background:           @gruvbox-dark-red-dark;
+    urgent-foreground:           @background;
+    alternate-urgent-background: @urgent-background;
+    alternate-urgent-foreground: @urgent-foreground;
+    selected-urgent-background:  @gruvbox-dark-red-light;
+    selected-urgent-foreground:  @urgent-foreground;
+
+     width: 600;
+    font: "JetBrainsMono Nerd Font 14";
 }
 
-#window {
+window {
+    height: 360px;
+    border: 3px;
     background-color: @background;
-    border:           1;
-    border-radius: 6;
-    border-color: @bordercolor;
-    padding:          5;
-}
-#mainbox {
+  }
+
+mainbox {
     border:  0;
     padding: 0;
 }
-#message {
-    border:       1px dash 0px 0px ;
+
+message {
+    margin: 2px;
+    padding: 2px;
+    border-radius: 5px;
     border-color: @separatorcolor;
-    padding:      1px ;
 }
-#textbox {
+
+textbox {
+    padding: 6px;
+    margin: 20px 0px 0px 20px;
+    highlight:  @highlight;
     text-color: @foreground;
 }
-#listview {
-    fixed-height: 0;
-    border:       2px dash 0px 0px ;
-    border-color: @bordercolor;
-    spacing:      2px ;
-    scrollbar:    false;
-    padding:      2px 0px 0px ;
+
+listview {
+    border: 0px 0px 0px;
+    padding: 6px 0px 0px;
+    margin: 10px 0px 0px 20px;
+    columns: 2;
+    lines: 5;
+    border-color: @separatorcolor;
 }
-#element {
+
+element {
     border:  0;
-    padding: 1px ;
+    padding: 5px;
 }
-#element.normal.normal {
-    background-color: @background;
-    text-color:       @foreground;
+
+element-icon {
+    size: 25px;
 }
-#element.normal.urgent {
+
+element.normal.normal {
+    background-color: @normal-background;
+    text-color:       @normal-foreground;
+}
+
+element.normal.urgent {
     background-color: @urgent-background;
     text-color:       @urgent-foreground;
 }
-#element.normal.active {
+
+element.normal.active {
     background-color: @active-background;
-    text-color:       @foreground;
+    text-color:       @active-foreground;
 }
-#element.selected.normal {
-    background-color: @selected-background;
-    text-color:       @foreground;
+
+element.selected.normal {
+    background-color: @selected-normal-background;
+    text-color:       @selected-normal-foreground;
 }
-#element.selected.urgent {
+
+element.selected.urgent {
     background-color: @selected-urgent-background;
-    text-color:       @foreground;
+    text-color:       @selected-urgent-foreground;
 }
-#element.selected.active {
+
+element.selected.active {
     background-color: @selected-active-background;
-    text-color:       @foreground;
+    text-color:       @selected-active-foreground;
 }
-#element.alternate.normal {
-    background-color: @background;
-    text-color:       @foreground;
+
+element.alternate.normal {
+    background-color: @alternate-normal-background;
+    text-color:       @alternate-normal-foreground;
 }
-#element.alternate.urgent {
-    background-color: @urgent-background;
-    text-color:       @foreground;
+
+element.alternate.urgent {
+    background-color: @alternate-urgent-background;
+    text-color:       @alternate-urgent-foreground;
 }
-#element.alternate.active {
-    background-color: @active-background;
-    text-color:       @foreground;
+
+element.alternate.active {
+    background-color: @alternate-active-background;
+    text-color:       @alternate-active-foreground;
 }
-#scrollbar {
-    width:        2px ;
+
+scrollbar {
+    width:        4px;
     border:       0;
-    handle-width: 8px ;
+    handle-color: @scrollbar-handle;
+    handle-width: 8px;
     padding:      0;
 }
-#sidebar {
-    border:       2px dash 0px 0px ;
+
+mode-switcher {
+    spacing: 0;
+    border:       2px 0 0;
     border-color: @separatorcolor;
 }
-#button.selected {
-    background-color: @selected-background;
-    text-color:       @foreground;
+
+inputbar {
+    border-radius: 5px;
+    padding: 2px;
+    text-color: @normal-foreground;
+    children:   [ prompt, entry, case-indicator ];
 }
-#inputbar {
-    spacing:    0;
-    text-color: @foreground;
-    padding:    1px ;
+
+prompt {
+    padding: 6px;
+    border-radius: 3px;
+    margin: 20px 0px 0px 20px;
+    background-color: @selected-button-background;
+    text-color: @normal-background;
 }
-#case-indicator {
-    spacing:    0;
-    text-color: @foreground;
+
+entry {
+    placeholder: "";
+    padding: 6px;
+    margin: 20px 0px 0px 10px;
 }
-#entry {
-    spacing:    0;
-    text-color: @foreground;
+
+button {
+    padding: 10px;
+    vertical-align: 0.5;
+    horizontal-align: 0.5;
+    text-color:       @button-foreground;
 }
-#prompt {
-    spacing:    0;
-    text-color: @foreground;
+
+button.selected {
+    background-color: @selected-normal-background;
+    text-color:       @selected-button-foreground;
 }
-#inputbar {
-    children:   [ prompt,textbox-prompt-colon,entry,case-indicator ];
-}
-#textbox-prompt-colon {
+
+textbox-prompt-sep {
     expand:     false;
     str:        ":";
-    margin:     0px 0.3em 0em 0em ;
-    text-color: @foreground;
+    text-color: @normal-foreground;
+}
+
+element-text, element-icon {
+    background-color: inherit;
+    text-color:       inherit;
 }

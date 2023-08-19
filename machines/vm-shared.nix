@@ -122,7 +122,7 @@
     fontDir.enable = true;
     enableDefaultFonts = true;
     fonts = with pkgs; [
-      (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
+      (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" "JetBrainsMono" "Iosevka" ]; })
     ];
     fontconfig = {
       defaultFonts = {
