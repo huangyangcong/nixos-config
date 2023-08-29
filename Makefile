@@ -103,6 +103,9 @@ vm/secrets:
 	rsync -av -e 'ssh $(SSH_OPTIONS)' \
 		--exclude='environment' \
 		$(HOME)/.ssh/ $(NIXUSER)@$(NIXADDR):~/.ssh
+	# Wallet keys
+	rsync -av -e 'ssh $(SSH_OPTIONS)' \
+		$(HOME)/eosio-wallet/ $(NIXUSER)@$(NIXADDR):~/eosio-wallet/
 
 # copy the Nix configurations into the VM.
 vm/copy:
@@ -118,7 +121,7 @@ vm/copy:
 # have to run vm/copy before.
 vm/switch:
 	ssh $(SSH_OPTIONS) -p$(NIXPORT) $(NIXUSER)@$(NIXADDR) " \
-		sudo NIXPKGS_ALLOW_INSECURE=1 NIXPKGS_ALLOW_UNFREE=1 NIXPKGS_ALLOW_UNSUPPORTED_SYSTEM=1 nixos-rebuild --option substituters https://mirrors.ustc.edu.cn/nix-channels/store --impure switch --flake \"/nix-config#${NIXNAME}\" \
+		sudo NIXPKGS_ALLOW_INSECURE=1 NIXPKGS_ALLOW_UNFREE=1 NIXPKGS_ALLOW_UNSUPPORTED_SYSTEM=1 nixos-rebuild --show-trace --impure switch --flake \"/nix-config#${NIXNAME}\" \
 	"
 
 vm/cs:

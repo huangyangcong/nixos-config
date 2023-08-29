@@ -6,11 +6,11 @@ return {
     ---@class PluginLspOpts
     opts = {
       inlay_hints = { enabled = vim.fn.has('nvim-0.10') },
-      ---@type lspconfig.options
-      servers = {
-        -- sourcekit will be automatically installed with mason and loaded with lspconfig
-        sourcekit = {},
-      },
+      -- ---@type lspconfig.options
+      -- servers = {
+      --   -- sourcekit will be automatically installed with mason and loaded with lspconfig
+      --   sourcekit = {},
+      -- },
     },
   },
 

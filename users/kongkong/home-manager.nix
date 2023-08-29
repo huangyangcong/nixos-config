@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, nixpkgs, ... }:
 
 let
   sources = import ../../nix/sources.nix;
@@ -18,7 +18,7 @@ in
   ];
   # Home-manager 22.11 requires this be set. We never set it so we have
   # to use the old state version.
-  home.stateVersion = "18.09";
+  home.stateVersion = "23.05";
 
   xdg.enable = true;
 
@@ -42,13 +42,24 @@ in
     pkgs.zoxide
     pkgs.unzip
     pkgs.zip
-    #pkgs.dust
+    pkgs.du-dust
     pkgs.openvpn
+    pkgs.flameshot
 
     pkgs.zigpkgs.master
 
+    pkgs.xclip # x clipboard 放在全局会导致nvim无法复制（权限问题）
     pkgs.neovim
+
     pkgs.gcc
+    pkgs.binutils
+    pkgs.llvmPackages_16.llvm # to get llvm-symbolizer when clang blows up
+    pkgs.clang_16
+    pkgs.clang-tools_16
+
+    #blockchain
+    pkgs.cdt
+    pkgs.leap
 
     # JavaScript / TypeScript programming language
     pkgs.deno
@@ -362,7 +373,7 @@ in
   home.pointerCursor = lib.mkIf isLinux {
     name = "Vanilla-DMZ";
     package = pkgs.vanilla-dmz;
-    size = 58;
+    size = 28;
     x11.enable = true;
   };
 }

@@ -52,8 +52,16 @@ bindsym $mod+o exec rofi -show run
 
 # start a terminal
 bindsym $mod+n exec kitty
+bindsym $mod+Return exec alacritty
 bindsym $mod+d split h
 bindsym $mod+Shift+d split v
+
+# Screenshot
+bindsym Print exec flameshot launcher
+bindsym $mod+Shift+Print exec flameshot gui
+bindsym Shift+Print exec flameshot full
+# Flameshot didn't provide a way to select a window
+bindsym $mod+Print exec --no-startup-id maim --window $(xdotool getactivewindow) | xclip -selection clipboard -t image/png
 
 # temp, hacking on a tty
 bindsym $mod+Shift+n exec /home/kongkong/bin/devtty --config-file=/home/kongkong/.config/devtty/config
@@ -203,7 +211,7 @@ bindsym $mod+BackSpace mode "$mode_system"
 bar {
     status_command i3status
 
-    font pango:FiraCode Nerd Font 8
+    font pango:FiraCode Nerd Font 7
     colors {
         background $back
     }
