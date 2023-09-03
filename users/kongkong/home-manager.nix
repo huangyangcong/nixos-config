@@ -51,15 +51,13 @@ in
     pkgs.xclip # x clipboard 放在全局会导致nvim无法复制（权限问题）
     pkgs.neovim
 
-    pkgs.gcc
-    pkgs.binutils
     pkgs.llvmPackages_16.llvm # to get llvm-symbolizer when clang blows up
     pkgs.clang_16
     pkgs.clang-tools_16
 
     #blockchain
-    pkgs.cdt
-    pkgs.leap
+    pkgs.cdt_3
+    pkgs.leap_4
 
     # JavaScript / TypeScript programming language
     pkgs.deno

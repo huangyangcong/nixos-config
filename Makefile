@@ -48,11 +48,6 @@ cache:
 # NOTE(mitchellh): I'm sure there is a way to do this and bootstrap all
 # in one step but when I tried to merge them I got errors. One day.
 vm/bootstrap0:
-	#parted /dev/sda -- mklabel msdos; \
-	#parted /dev/sda -- mkpart primary 1MB -8GB; \
-	#parted /dev/sda -- set 1 boot on; \
-	#parted /dev/sda -- mkpart primary linux-swap -8GB 100%; \
-	#nix.settings.substituters = [\"https://mirrors.ustc.edu.cn/nix-channels/store\"];\n \
 	ssh $(SSH_OPTIONS) -p$(NIXPORT) root@$(NIXADDR) " \
 		parted /dev/sda -- mklabel gpt; \
 		parted /dev/sda -- mkpart primary 512MB -8GB; \
@@ -71,9 +66,9 @@ vm/bootstrap0:
 		sed --in-place '/system\.stateVersion = .*/a \
 			nix.package = pkgs.nixUnstable;\n \
 			nix.extraOptions = \"experimental-features = nix-command flakes\";\n \
-			nix.settings.substituters = [\"https://mitchellh-nixos-config.cachix.org\"];\n \
-			nix.settings.trusted-public-keys = [\"mitchellh-nixos-config.cachix.org-1:bjEbXJyLrL1HZZHBbO4QALnI5faYZppzkU4D2s0G8RQ=\"];\n \
-  			services.openssh.enable = true;\n \
+			nix.settings.substituters = [\"https://mitchellh-nixos-config.cachix.org\" \"https://kongkong.cachix.org\"];\n \
+			nix.settings.trusted-public-keys = [\"mitchellh-nixos-config.cachix.org-1:bjEbXJyLrL1HZZHBbO4QALnI5faYZppzkU4D2s0G8RQ=\" \"kongkong.cachix.org-1:A7BRqLG8FOj5LfQtriRzq2gZZEjEDGlnLjhxdyMhSMo=\"];\n \
+  		services.openssh.enable = true;\n \
 			services.openssh.settings.PasswordAuthentication = true;\n \
 			services.openssh.settings.PermitRootLogin = \"yes\";\n \
 			users.users.root.initialPassword = \"root\";\n \

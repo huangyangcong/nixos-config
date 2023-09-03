@@ -5,20 +5,56 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   nix = {
+    channel.enable = false;
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 3d";
+    };
     # use unstable nix so we can access flakes
     package = pkgs.nixUnstable;
+    #package = pkgs.nix;   # avoid using nixUnstable
     extraOptions = ''
-      experimental-features = nix-command flakes
-      keep-outputs = true
       keep-derivations = true
     '';
 
     # public binary cache that I use for all my derivations. You can keep
     # this, use your own, or toss it. Its typically safe to use a binary cache
     # since the data inside is checksummed.
+
     settings = {
-      substituters = [ "https://mitchellh-nixos-config.cachix.org" "https://kongkong.cachix.org" ];
-      trusted-public-keys = [ "mitchellh-nixos-config.cachix.org-1:bjEbXJyLrL1HZZHBbO4QALnI5faYZppzkU4D2s0G8RQ=" "kongkong.cachix.org-1:A7BRqLG8FOj5LfQtriRzq2gZZEjEDGlnLjhxdyMhSMo=" ];
+      # 去重和优化nix存储
+      auto-optimise-store = true;
+      download-attempts = 3;
+      experimental-features = [
+        "flakes"
+        "nix-command"
+        "repl-flake"
+      ];
+      fallback = true;
+      keep-failed = true;
+      keep-outputs = true;
+      max-jobs = 3; # https://github.com/NixOS/nixpkgs/issues/198668
+      #nix-path = [ "nixpkgs=/etc/nix/inputs/nixpkgs" ];
+      # REF: <https://docs.cachix.org/faq#frequently-asked-questions>
+      # REF: <https://nix.dev/faq#how-do-i-force-nix-to-re-check-whether-something-exists-at-a-binary-cache>
+      narinfo-cache-negative-ttl = 30;
+      tarball-ttl = 30;
+      substituters = [
+        "https://mirrors.cernet.edu.cn/nix-channels/store"
+        "https://mirror.sjtu.edu.cn/nix-channels/store"
+        "https://mirrors.bfsu.edu.cn/nix-channels/store"
+        "https://mitchellh-nixos-config.cachix.org"
+        "https://kongkong.cachix.org"
+        "https://cache.nixos.org"
+        "https://rewine.cachix.org"
+        "https://xddxdd.cachix.org"
+        "https://cache.garnix.io"
+      ];
+      trusted-public-keys = [
+        "mitchellh-nixos-config.cachix.org-1:bjEbXJyLrL1HZZHBbO4QALnI5faYZppzkU4D2s0G8RQ="
+        "kongkong.cachix.org-1:A7BRqLG8FOj5LfQtriRzq2gZZEjEDGlnLjhxdyMhSMo="
+      ];
     };
   };
 
@@ -37,6 +73,11 @@
 
   # Define your hostname.
   networking.hostName = "dev";
+
+  # Define your hosts.
+  networking.extraHosts = ''
+    140.82.112.3 github.com
+  '';
 
   # Set your time zone.
   time.timeZone = "Asia/Shanghai";

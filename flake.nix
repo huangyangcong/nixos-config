@@ -17,7 +17,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nurpkgs.url = "github:nix-community/NUR"";
+    nurpkgs.url = "github:nix-community/NUR";
 
     darwin = {
       url = "github:LnL7/nix-darwin";
@@ -56,7 +56,7 @@
         inputs.neovim-nightly-overlay.overlay
         inputs.rust-overlay.overlays.default
         inputs.zig.overlays.default
-        (import ${inputs.my-nur-packages}/overlay.nix)
+        (import "${inputs.my-nur-packages}/overlay.nix")
       ];
     in
     {
