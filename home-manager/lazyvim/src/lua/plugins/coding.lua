@@ -54,5 +54,12 @@ return {
       end
     end
   },
-
+  {
+    "gbprod/yanky.nvim",
+    keys = {
+      -- stylua: ignore
+      { 'p', '"_d<Plug>(YankyPutBefore)', mode = 'x', desc = 'replace text without changing the copy register' },
+      { 'P', '"_d<Plug>(YankyPutAfter)', mode = 'x', desc = 'replace text without changing the copy register' },
+    },
+  }
 }

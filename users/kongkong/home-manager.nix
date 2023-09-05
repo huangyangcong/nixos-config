@@ -50,6 +50,7 @@ in
 
     pkgs.xclip # x clipboard 放在全局会导致nvim无法复制（权限问题）
     pkgs.neovim
+    pkgs.sqlite
 
     pkgs.llvmPackages_16.llvm # to get llvm-symbolizer when clang blows up
     pkgs.clang_16
@@ -143,6 +144,11 @@ in
     EDITOR = "nvim";
     PAGER = "less -FirSwX";
     MANPAGER = "${manpager}/bin/manpager";
+    LIBSQLITE =
+      if isLinux then
+        "${pkgs.sqlite.out}/lib/libsqlite3.so"
+      else
+        "${pkgs.sqlite.out}/lib/libsqlite3.dylib";
   };
 
   # every time fcitx5 switch input method, it will modify ~/.config/fcitx5/profile file,

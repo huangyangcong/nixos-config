@@ -1,5 +1,5 @@
 # Connectivity info for Linux VM
-NIXADDR ?= unset
+NIXADDR ?= 192.168.182.130
 NIXPORT ?= 22
 NIXUSER ?= kongkong
 
@@ -112,6 +112,17 @@ vm/copy:
 		--rsync-path="sudo rsync" \
 		$(MAKEFILE_DIR)/ $(NIXUSER)@$(NIXADDR):/nix-config
 
+# copy the Nvim packages
+vm/nvim:
+	rsync -av -e 'ssh $(SSH_OPTIONS) -p$(NIXPORT)' \
+		$(HOME)/.local/share/nvim/ $(NIXUSER)@$(NIXADDR):~/.local/share/nvim/
+
+
+# copy the workspace
+vm/workspace:
+	rsync -av -e 'ssh $(SSH_OPTIONS) -p$(NIXPORT)' \
+		$(HOME)/workspace/ $(NIXUSER)@$(NIXADDR):~/workspace/
+
 # run the nixos-rebuild switch command. This does NOT copy files so you
 # have to run vm/copy before.
 vm/switch:
@@ -120,8 +131,8 @@ vm/switch:
 	"
 
 vm/cs:
-	NIXADDR=192.168.182.129 $(MAKE) vm/copy
-	NIXADDR=192.168.182.129 $(MAKE) vm/switch
+	$(MAKE) vm/copy
+	$(MAKE) vm/switch
 
 # Build an ISO image
 iso/nixos.iso:

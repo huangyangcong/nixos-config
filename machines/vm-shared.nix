@@ -41,15 +41,11 @@
       narinfo-cache-negative-ttl = 30;
       tarball-ttl = 30;
       substituters = [
-        "https://mirrors.cernet.edu.cn/nix-channels/store"
         "https://mirror.sjtu.edu.cn/nix-channels/store"
         "https://mirrors.bfsu.edu.cn/nix-channels/store"
         "https://mitchellh-nixos-config.cachix.org"
         "https://kongkong.cachix.org"
         "https://cache.nixos.org"
-        "https://rewine.cachix.org"
-        "https://xddxdd.cachix.org"
-        "https://cache.garnix.io"
       ];
       trusted-public-keys = [
         "mitchellh-nixos-config.cachix.org-1:bjEbXJyLrL1HZZHBbO4QALnI5faYZppzkU4D2s0G8RQ="
