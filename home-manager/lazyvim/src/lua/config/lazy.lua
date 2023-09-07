@@ -42,7 +42,7 @@ return function(opts)
       -- lazyvim copilot extension modules
       { import = "lazyvim.plugins.extras.coding.copilot", enabled = opts.nv.copilot_support },
       -- lazyvim yanky extension modules
-      { import = "lazyvim.plugins.extras.coding.yanky" },
+      -- { import = "lazyvim.plugins.extras.coding.yanky" },
       -- lazyvim dap core extension modules
       { import = "lazyvim.plugins.extras.dap.core", enabled = opts.nv.dap_support },
       -- debugger specific extension modules

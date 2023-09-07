@@ -49,7 +49,7 @@ in
     pkgs.zigpkgs.master
 
     pkgs.xclip # x clipboard 放在全局会导致nvim无法复制（权限问题）
-    pkgs.neovim
+    pkgs.neovim-nightly
     pkgs.sqlite
 
     pkgs.llvmPackages_16.llvm # to get llvm-symbolizer when clang blows up
@@ -186,7 +186,7 @@ in
   # Programs
   #---------------------------------------------------------------------
 
-  programs.gpg.enable = !isDarwin;
+  #proggnupgrams.gpg.enable = !isDarwin;
 
   programs.bash = {
     enable = true;
@@ -263,13 +263,14 @@ in
 
   programs.lazygit = {
     enable = true;
+    package = pkgs.unstable.lazygit;
     settings = {
       git = {
         paging = {
           colorArg = "always";
           #pager = "${pkgs.delta}/bin/delta --dark --paging=never";
         };
-        overrideGpg = true;
+        overrideGpg = true; #https://github.com/jesseduffield/lazygit/issues/1146
       };
     };
   };
@@ -362,14 +363,14 @@ in
     };
   };
 
-  services.gpg-agent = {
-    enable = isLinux;
-    pinentryFlavor = "tty";
-
-    # cache the keys forever so we don't get asked for a password
-    defaultCacheTtl = 31536000;
-    maxCacheTtl = 31536000;
-  };
+  # services.gpg-agent = {
+  #   enable = isLinux;
+  #   pinentryFlavor = "tty";
+  #
+  #   # cache the keys forever so we don't get asked for a password
+  #   defaultCacheTtl = 31536000;
+  #   maxCacheTtl = 31536000;
+  # };
 
   xresources.extraConfig = builtins.readFile ./Xresources;
 

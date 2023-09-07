@@ -32,9 +32,8 @@
     neovim-nightly-overlay = {
       url = "github:nix-community/neovim-nightly-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.neovim-flake.url = "github:neovim/neovim?dir=contrib";
     };
-
-
     # Rust toolchain.
     rust-overlay.url = "github:oxalica/rust-overlay";
     # Blockchain
@@ -46,10 +45,19 @@
     zig.url = "github:mitchellh/zig-overlay";
   };
 
-  outputs = { self, nixpkgs, home-manager, darwin, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, darwin, ... }@inputs:
     let
       mkDarwin = import ./lib/mkdarwin.nix;
       mkVM = import ./lib/mkvm.nix;
+      overlay-unstable = final: prev: {
+        unstable = nixpkgs-unstable.legacyPackages.${prev.system};
+        # use this variant if unfree packages are needed:
+        # unstable = import nixpkgs-unstable {
+        #   inherit system;
+        #   config.allowUnfree = true;
+        # };
+
+      };
 
       # Overlays is the list of overlays we want to apply from flake inputs.
       overlays = [
@@ -57,6 +65,7 @@
         inputs.rust-overlay.overlays.default
         inputs.zig.overlays.default
         (import "${inputs.my-nur-packages}/overlay.nix")
+        overlay-unstable
       ];
     in
     {
