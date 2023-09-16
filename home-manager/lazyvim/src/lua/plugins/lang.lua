@@ -7,10 +7,21 @@ return {
     opts = {
       inlay_hints = { enabled = vim.fn.has('nvim-0.10') },
       -- ---@type lspconfig.options
-      -- servers = {
-      --   -- sourcekit will be automatically installed with mason and loaded with lspconfig
-      --   sourcekit = {},
-      -- },
+      servers = {
+        clangd = {
+          cmd = {
+            "/nix/store/am88hp48jmxi6fnkqb2mhmhjxnpr6l84-clang-16.0.1/bin/clangd",
+            "--background-index",
+            "--clang-tidy",
+            "--header-insertion=iwyu",
+            "--completion-style=detailed",
+            "--function-arg-placeholders",
+            "--fallback-style=llvm",
+          },
+        }
+        -- sourcekit will be automatically installed with mason and loaded with lspconfig
+        -- sourcekit = {},
+      },
     },
   },
 
@@ -18,7 +29,14 @@ return {
   {
     "williamboman/mason.nvim",
     opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed, { "lua-language-server", "marksman" })
+      vim.list_extend(opts.ensure_installed, {
+        "lua-language-server",
+        "marksman",
+        -- blockchain and smart contracts
+        -- "nomicfoundation-solidity-language-server",
+        "solang",
+        "solhint",
+      })
       opts.ui = {
         icons = {
           package_installed = "✓",
@@ -155,5 +173,14 @@ return {
     },
     config = function() end
   },
-
+  -- Setup null-ls with `clang_format`
+  {
+    "jose-elias-alvarez/null-ls.nvim",
+    opts = function(_, opts)
+      local nls = require("null-ls")
+      opts.sources = vim.list_extend(opts.sources, {
+        nls.builtins.formatting.clang_format
+      })
+    end,
+  },
 }

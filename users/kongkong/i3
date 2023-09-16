@@ -61,7 +61,7 @@ bindsym Print exec flameshot launcher
 bindsym $mod+Shift+Print exec flameshot gui
 bindsym Shift+Print exec flameshot full
 # Flameshot didn't provide a way to select a window
-bindsym $mod+Print exec --no-startup-id maim --window $(xdotool getactivewindow) | xclip -selection clipboard -t image/png
+bindsym $mod+Print exec flameshot gui -r | xclip -selection clipboard -t image/png
 
 # temp, hacking on a tty
 bindsym $mod+Shift+n exec /home/kongkong/bin/devtty --config-file=/home/kongkong/.config/devtty/config
@@ -211,7 +211,7 @@ bindsym $mod+BackSpace mode "$mode_system"
 bar {
     status_command i3status
 
-    font pango:FiraCode Nerd Font 7
+    font pango:FiraCode Nerd Font 8
     colors {
         background $back
     }

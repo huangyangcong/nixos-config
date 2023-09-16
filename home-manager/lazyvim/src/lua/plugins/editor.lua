@@ -1,3 +1,11 @@
+local Util = require("lazyvim.util")
+local find_files_command = { "rg", "--files", "--hidden", "-g", "!{node_modules,.git}" }
+local function get_visual()
+  local _, ls, cs = unpack(vim.fn.getpos("v"))
+  local _, le, ce = unpack(vim.fn.getpos("."))
+  return vim.api.nvim_buf_get_text(0, ls - 1, cs - 1, le - 1, ce, {})
+end
+
 return {
 
   -- disable mini.bufremove
@@ -48,7 +56,7 @@ return {
   },
 
 -- ====for live_grep raw====:
--- for rp usage: reference: https://segmentfault.com/a/1190000016170184
+-- for rg usage: reference: https://segmentfault.com/a/1190000016170184
 -- -i ignore case
 -- -s 大小写敏感
 -- -w match word
@@ -104,15 +112,44 @@ return {
     keys = {
       {
         "<leader>fs",
-        "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args()<cr>",
+        function()
+          require('telescope').extensions.live_grep_args.live_grep_args({
+            -- default_text='-g * ' .. vim.fn.expand('<cword>')
+            default_text='-g * '
+          })
+        end,
         desc = "Find String"
       },
       {
-        "<leader>fg",
-        "<cmd>lua require('telescope-live-grep-args.shortcuts').grep_visual_selection()<cr>",
-        desc = "Find String",
-        mode = { "v" }
-      }
+        "<leader>fs",
+        mode = { "x" },
+        function()
+          require('telescope').extensions.live_grep_args.live_grep_args({
+            default_text='-g * ' .. get_visual()
+          })
+        end,
+        desc = "Find String"
+      },
+      {
+        "<leader><space>",
+        Util.telescope("find_files"),
+        desc = "Find Files (root dir)"
+      },
+      {
+        "<leader>/",
+        Util.telescope("live_grep", { find_command = find_files_command }),
+        desc = "Grep (root dir)"
+      },
+      {
+        "<leader>ff",
+        Util.telescope("find_files", { find_command = find_files_command }),
+        desc = "Find Files (root dir)"
+      },
+      {
+        "<leader>fF",
+        Util.telescope("find_files", { cwd = false, find_command = find_files_command }),
+        desc = "Find Files (re. Git root)"
+      },
     },
     opts = {
       defaults = {
@@ -126,6 +163,18 @@ return {
           },
           height = 0.9,
           width = 0.9
+        },
+        file_ignore_patterns = {
+          "target/*",
+          "node_modules/*",
+          "dist/*",
+          "build/*",
+          "codegen/*",
+          "generated/*",
+          "tmp/*",
+          "^.git/*",
+          "^.yarn/*",
+          "^.gradle/*"
         },
         mappings = {
           i = {
@@ -166,6 +215,10 @@ return {
           layout_config = {
             preview_height = 0.4,
           },
+        },
+        live_grep_args = {
+          vimgrep_arguments = find_command,
+          auto_quoting = true, -- enable/disable auto-quoting
         },
       },
     },

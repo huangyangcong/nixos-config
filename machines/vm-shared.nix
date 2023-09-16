@@ -113,7 +113,7 @@
   services.xserver = {
     enable = true;
     layout = "us";
-    dpi = 125;
+    dpi = 120;
     # Unlock auto unlock gnome-keyring for i3 and other WMs that don't use a display manager
     updateDbusEnvironment = true;
     desktopManager = {
@@ -164,7 +164,7 @@
     ];
     fontconfig = {
       defaultFonts = {
-        monospace = [ "FiraCode Nerd Font" ];
+        monospace = [ "JetBrainsMono Nerd Font" ];
       };
     };
   };
@@ -178,6 +178,7 @@
     niv
     rxvt_unicode
     gnupg
+    xclip
 
     # For hypervisors that support auto-resizing, this script forces it.
     # I've noticed not everyone listens to the udev events so this is a hack.

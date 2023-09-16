@@ -117,7 +117,6 @@ vm/nvim:
 	rsync -av -e 'ssh $(SSH_OPTIONS) -p$(NIXPORT)' \
 		$(HOME)/.local/share/nvim/ $(NIXUSER)@$(NIXADDR):~/.local/share/nvim/
 
-
 # copy the workspace
 vm/workspace:
 	rsync -av -e 'ssh $(SSH_OPTIONS) -p$(NIXPORT)' \

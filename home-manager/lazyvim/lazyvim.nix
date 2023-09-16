@@ -4,9 +4,8 @@ let
 in
 {
   home.file = {
-    nvim = {
+    ".config/nvim" = {
       source = ./src;
-      target = "./.config/nvim";
       recursive = true;
     };
   };

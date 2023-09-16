@@ -13,9 +13,6 @@ let
   ''));
 in
 {
-  imports = [
-    ../../home-manager/lazyvim/lazyvim.nix
-  ];
   # Home-manager 22.11 requires this be set. We never set it so we have
   # to use the old state version.
   home.stateVersion = "23.05";
@@ -31,6 +28,7 @@ in
   # not a huge list.
   home.packages = [
     # tools
+    pkgs.wget
     pkgs.bat
     pkgs.fd
     pkgs.fzf
@@ -45,16 +43,19 @@ in
     pkgs.du-dust
     pkgs.openvpn
     pkgs.flameshot
+    pkgs.aria2
 
     pkgs.zigpkgs.master
 
-    pkgs.xclip # x clipboard 放在全局会导致nvim无法复制（权限问题）
-    pkgs.neovim-nightly
+    pkgs.neovim
     pkgs.sqlite
 
-    pkgs.llvmPackages_16.llvm # to get llvm-symbolizer when clang blows up
-    pkgs.clang_16
-    pkgs.clang-tools_16
+    pkgs.llvmPackages_16.llvm # to get llvm-symbolizer when clang blows uplld
+    pkgs.llvmPackages_16.clang-unwrapped
+    pkgs.llvmPackages_16.libclang
+    pkgs.llvmPackages_16.lld
+    #pkgs.clang_16
+    #pkgs.clang-tools_16
 
     #blockchain
     pkgs.cdt_3
@@ -162,6 +163,9 @@ in
   home.file.".gdbinit".source = ./gdbinit;
   home.file.".inputrc".source = ./inputrc;
   home.file.".pip/pip.conf".source = ../../home-manager/python/pip.conf;
+  imports = [
+    ../../home-manager/lazyvim/lazyvim.nix
+  ];
 
   xdg.configFile."i3/config".text = builtins.readFile ./i3;
   xdg.configFile."rofi/config.rasi".text = builtins.readFile ./rofi;

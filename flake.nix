@@ -32,7 +32,7 @@
     neovim-nightly-overlay = {
       url = "github:nix-community/neovim-nightly-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.neovim-flake.url = "github:neovim/neovim?dir=contrib";
+      # inputs.neovim-flake.url = "github:neovim/neovim?dir=contrib&rev=3afbf4745bcc9836c0bc5e383a8e46cc16ea8014";
     };
     # Rust toolchain.
     rust-overlay.url = "github:oxalica/rust-overlay";

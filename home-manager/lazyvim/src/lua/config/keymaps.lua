@@ -28,13 +28,33 @@ end
 local opt = { noremap = true, silent = true }
 -- 关闭搜索高亮
 map({ 'n' }, '<leader>nh', ':nohlsearch<CR>', opt)
+-- select all
+map({ "n" }, "<C-a>", "gg0vG$", opt)
 -- search/replace
 map({ "n" }, "<A-r>", ":%s///g<left><left><left>", { noremap = true, silent = false })
-map({ "n" }, "<C-a>", "gg0vG$", opt)
+map({ "v" }, "<A-r>", [[y:%s`<C-R>"``g<left><left>]], { noremap = true, silent = false })
+map({ "n" }, "<leader>r", [[:%s:\v::g<Left><Left><Left>]], { noremap = true, silent = false, desc = 'Global RegEx substitute.' } )
+map({ "x" }, "<leader>r", [[:s:\v::g<Left><Left><Left>]], { noremap = true, silent = false, desc = 'RegEx substitute within selection.' })
 
--- 在visual mode 里粘贴不要复制
-map({ "v" }, "p", '"_dP', opt)
-map({ "v" }, "gp", '"+p', opt)
+-- 在visual mode 粘贴不复制
+-- https://vim.fandom.com/wiki/Replace_a_word_with_yanked_text#Alternative_mapping_for_paste
+-- unnamedplus
+map({ "x" }, 'p', 'p:let @+=@0<CR>:let @"=@0<CR>', { silent = true, desc = 'Paste' })
+-- unname
+-- map({ "x" }, 'p', '"_dp:let @+=@0<CR>', { silent = true, desc = 'Paste' })
+
+map({ "v" }, '<C-c>', '"*y :let @+=@*<CR>', { silent = true, desc = 'Copy' })
+
+-- 搜索选中文字
+map({ "v" }, '<silent> *', 'y/<C-R>"<CR>', { noremap = true, desc = 'Search current selection' })
+map({ "v" }, '<silent> #', 'y?<C-R>"<CR>', { noremap = true, desc = 'Search current selection' })
+-- 选中一段文字并全文搜索这段文字
+-- via http://hotoo.googlecode.com/svn-history/r297/vimwiki/Vim.html#toc_1.4.3
+map({ "v" }, "<leader>*", [[y/<C-R>=escape(@", '\\/.*$^~[]')<CR><CR>]], opt)
+map({ "v" }, "<leader>#", [[y?<C-R>=escape(@", '\\/.*$^~[]')<CR><CR>]], opt)
+-- Map "/" to include the last search pattern
+map({ "n" }, "<leader>/", "/<C-r>/<CR>", opt)
+map({ "n" }, "<leader>?", "?<C-r>/<CR>", opt)
 
 map({ "n" }, "n", "nzzzv", opt)
 map({ "n" }, "N", "Nzzzv", opt)

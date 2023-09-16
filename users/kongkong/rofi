@@ -12,6 +12,8 @@
    ========================================================================== */
 
 configuration{
+    dpi: 120;
+    font: "FiraCode Nerd Font 12";
     modi: "run,drun,window";
     icon-theme: "Oranchelo";
     show-icons: true;
