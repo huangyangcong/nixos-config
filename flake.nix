@@ -17,7 +17,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nurpkgs.url = "github:nix-community/NUR";
+    nur.url = "github:nix-community/NUR";
 
     darwin = {
       url = "github:LnL7/nix-darwin";

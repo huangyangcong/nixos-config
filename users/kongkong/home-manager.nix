@@ -1,4 +1,4 @@
-{ config, lib, pkgs, nixpkgs, ... }:
+{ config, lib, pkgs, nixpkgs, currentSystemName, ... }:
 
 let
   sources = import ../../nix/sources.nix;
@@ -44,12 +44,15 @@ in
     pkgs.openvpn
     pkgs.flameshot
     pkgs.aria2
+    pkgs.xss-lock
+
+    pkgs.neovim
+    pkgs.stylua
 
     pkgs.zigpkgs.master
 
-    pkgs.neovim
-    pkgs.sqlite
-
+    pkgs.gdb
+    pkgs.gcc
     pkgs.llvmPackages_16.llvm # to get llvm-symbolizer when clang blows uplld
     pkgs.llvmPackages_16.clang-unwrapped
     pkgs.llvmPackages_16.libclang
@@ -60,6 +63,7 @@ in
     #blockchain
     pkgs.cdt_3
     pkgs.leap_4
+    pkgs.solang_0_3_2
 
     # JavaScript / TypeScript programming language
     pkgs.deno
@@ -80,6 +84,7 @@ in
     (pkgs.rust-bin.stable.latest.default.override {
       extensions = [ "rust-src" "rustfmt" ];
     })
+    pkgs.rust-analyzer
 
     # Go programming language
     pkgs.go
@@ -89,6 +94,9 @@ in
 
     #solc
     pkgs.solc
+
+    #lua
+    pkgs.lua-language-server
 
     # DevOps & Kubernetes
     # pkgs.colima # Docker on Linux on Max: Replaces Docker Desktop
@@ -145,11 +153,6 @@ in
     EDITOR = "nvim";
     PAGER = "less -FirSwX";
     MANPAGER = "${manpager}/bin/manpager";
-    LIBSQLITE =
-      if isLinux then
-        "${pkgs.sqlite.out}/lib/libsqlite3.so"
-      else
-        "${pkgs.sqlite.out}/lib/libsqlite3.dylib";
   };
 
   # every time fcitx5 switch input method, it will modify ~/.config/fcitx5/profile file,
@@ -166,7 +169,6 @@ in
   imports = [
     ../../home-manager/lazyvim/lazyvim.nix
   ];
-
   xdg.configFile."i3/config".text = builtins.readFile ./i3;
   xdg.configFile."rofi/config.rasi".text = builtins.readFile ./rofi;
   xdg.configFile."devtty/config".text = builtins.readFile ./devtty;
@@ -382,7 +384,7 @@ in
   home.pointerCursor = lib.mkIf isLinux {
     name = "Vanilla-DMZ";
     package = pkgs.vanilla-dmz;
-    size = 28;
+    size = 32;
     x11.enable = true;
   };
 }

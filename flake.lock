@@ -243,6 +243,26 @@
         "type": "github"
       }
     },
+    "my-nur-packages": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1695114732,
+        "narHash": "sha256-t36FPUb7wzEjRo5F6qpXECYPwqCydKbiAcbSc1ExvtE=",
+        "owner": "huangyangcong",
+        "repo": "nur-packages",
+        "rev": "d98e8030e3eb650eedac6ac11ae78e8d910bf4ba",
+        "type": "github"
+      },
+      "original": {
+        "owner": "huangyangcong",
+        "repo": "nur-packages",
+        "type": "github"
+      }
+    },
     "neovim-flake": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -389,23 +409,18 @@
         "type": "github"
       }
     },
-    "nur-packages": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
+    "nur": {
       "locked": {
-        "lastModified": 1692858986,
-        "narHash": "sha256-29YpH55oxPgssdCa4i3jWfmAh38JeUAfTOxSODMM0z0=",
-        "owner": "huangyangcong",
-        "repo": "nur-packages",
-        "rev": "451b46a2c466659244ae18818b26172bc47eb75b",
+        "lastModified": 1695110420,
+        "narHash": "sha256-tZRgkZwU8wArD8oFsEQ5hjLfkcny7Cvr7KuGlfKXdW8=",
+        "owner": "nix-community",
+        "repo": "NUR",
+        "rev": "ada2638fdfdbd642fef6a87381a2c6acc8850b85",
         "type": "github"
       },
       "original": {
-        "owner": "huangyangcong",
-        "repo": "nur-packages",
+        "owner": "nix-community",
+        "repo": "NUR",
         "type": "github"
       }
     },
@@ -413,10 +428,11 @@
       "inputs": {
         "darwin": "darwin",
         "home-manager": "home-manager",
+        "my-nur-packages": "my-nur-packages",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
-        "nur-packages": "nur-packages",
+        "nur": "nur",
         "rust-overlay": "rust-overlay",
         "zig": "zig"
       }

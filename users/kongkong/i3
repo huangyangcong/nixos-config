@@ -15,15 +15,15 @@ floating_maximum_size -1 x -1
 focus_follows_mouse no
 
 # Reading colors from resources
-set_from_resource $back			i3wm.background #1D1F21
-set_from_resource $black		i3wm.color0		#282A2E
-set_from_resource $grey			i3wm.color8		#373B41
-set_from_resource $lightgrey	i3wm.color7		#707880
-set_from_resource $white		i3wm.color15	#C5C8C6
-set_from_resource $yellow		i3wm.color11	#F0C674
-set_from_resource $red			i3wm.color9		#CC6666
-set_from_resource $darkred		i3wm.color1		#A54242
-set_from_resource $green		i3wm.color10	#B5BD56
+set_from_resource $back i3wm.background #1D1F21
+set_from_resource $black i3wm.color0 #282A2E
+set_from_resource $grey i3wm.color8 #373B41
+set_from_resource $lightgrey i3wm.color7 #707880
+set_from_resource $white i3wm.color15 #C5C8C6
+set_from_resource $yellow i3wm.color11 #F0C674
+set_from_resource $red i3wm.color9 #CC6666
+set_from_resource $darkred i3wm.color1 #A54242
+set_from_resource $green i3wm.color10 #B5BD56
 
 #class                  border      backgr.     text        split
 client.focused          $green     $green       $black      $red
@@ -35,12 +35,24 @@ client.background       $back
 #----------------------------------------------------------------------
 # Startup
 #----------------------------------------------------------------------
+# This font is widely installed, provides lots of unicode glyphs, right-to-left
+# text rendering and scalability on retina/hidpi displays (thanks to pango).
+font pango:DejaVu Sans Mono 9
+
+# The combination of xss-lock, nm-applet and pactl is a popular choice, so
+# they are included here as an example. Modify as you see fit.
+
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+
+# exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+# bindsym Control+Mod1+l exec i3lock
+
+exec --no-startup-id xss-lock --transfer-sleep-lock -- betterlockscreen -l -- -n -f
+bindsym Control+Mod1+l exec --no-startup-id betterlockscreen -l -- -n -f
 
 # No background
-exec --no-startup-id xsetroot -solid $back
+exec --no-startup-id xsetroot -solid "#1D1F21"
 
 #----------------------------------------------------------------------
 # Keybindings
@@ -211,7 +223,7 @@ bindsym $mod+BackSpace mode "$mode_system"
 bar {
     status_command i3status
 
-    font pango:FiraCode Nerd Font 8
+    font pango:FiraCode Nerd Font 10
     colors {
         background $back
     }

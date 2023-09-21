@@ -122,13 +122,13 @@ return {
       },
       {
         "<leader>fs",
-        mode = { "x" },
         function()
           require('telescope').extensions.live_grep_args.live_grep_args({
             default_text='-g * ' .. get_visual()
           })
         end,
-        desc = "Find String"
+        desc = "Find String",
+        mode = { "x" },
       },
       {
         "<leader><space>",
