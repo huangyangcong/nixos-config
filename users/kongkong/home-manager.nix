@@ -52,13 +52,13 @@ in
     pkgs.zigpkgs.master
 
     pkgs.gdb
-    pkgs.gcc
-    pkgs.llvmPackages_16.llvm # to get llvm-symbolizer when clang blows uplld
-    pkgs.llvmPackages_16.clang-unwrapped
-    pkgs.llvmPackages_16.libclang
-    pkgs.llvmPackages_16.lld
-    #pkgs.clang_16
-    #pkgs.clang-tools_16
+    #pkgs.gcc
+    #pkgs.llvmPackages_16.llvm # to get llvm-symbolizer when clang blows uplld
+    #pkgs.llvmPackages_16.clang-unwrapped
+    #pkgs.llvmPackages_16.libclang
+    #pkgs.llvmPackages_16.lld
+    pkgs.clang_16
+    pkgs.clang-tools_16
 
     #blockchain
     pkgs.cdt_3

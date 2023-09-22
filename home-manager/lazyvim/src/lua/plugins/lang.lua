@@ -96,12 +96,6 @@ return {
     "mfussenegger/nvim-jdtls",
     optional = true,
     opts = function(_, opts)
-      -- points to $HOME/.local/share/nvim/mason/packages/jdtls/
-      local jdtls_path = require("mason-registry").get_package("jdtls"):get_install_path()
-      opts.cmd = {
-        "jdtls",
-        "--jvm-arg=-javaagent:" .. jdtls_path .. "/lombok.jar",
-      }
       opts.settings = {
         java = {
           configuration = {
