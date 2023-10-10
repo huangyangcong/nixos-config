@@ -77,19 +77,19 @@ return {
   },
 
   -- overwrite Rust tools inlay hints
-  {
-    "simrat39/rust-tools.nvim",
-    optional = true,
-    opts = {
-      tools = {
-        inlay_hints = {
-          -- nvim >= 0.10 has native inlay hint support,
-          -- so we don't need the rust-tools specific implementation any longer
-          auto = not vim.fn.has("nvim-0.10"),
-        },
-      },
-    },
-  },
+  -- {
+  --   "simrat39/rust-tools.nvim",
+  --   optional = true,
+  --   opts = {
+  --     tools = {
+  --       inlay_hints = {
+  --         -- nvim >= 0.10 has native inlay hint support,
+  --         -- so we don't need the rust-tools specific implementation any longer
+  --         auto = not vim.fn.has("nvim-0.10"),
+  --       },
+  --     },
+  --   },
+  -- },
 
   -- overwrite Jdtls options
   {
@@ -174,5 +174,19 @@ return {
         nls.builtins.formatting.clang_format,
       })
     end,
+  },
+  {
+    "skywind3000/asynctasks.vim",
+    dependencies = {
+      { "skywind3000/asyncrun.vim" },
+    },
+    config = function()
+      vim.cmd([[
+          let g:asyncrun_open = 8
+          let g:asynctask_template = '~/.config/nvim/task_template.ini'
+          let g:asynctasks_extra_config = ['~/.config/nvim/tasks.ini']
+        ]])
+    end,
+    event = { "BufRead", "BufNew" },
   },
 }

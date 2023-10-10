@@ -1,6 +1,5 @@
 { inputs, config, pkgs, lib, ... }:
 let
-  sources = import ../../nix/sources.nix;
 in
 {
   home.file = {
@@ -10,6 +9,54 @@ in
     };
     ".config/nvim/lua/plugins/lang_extra.lua".text = ''
       return {
+        -- overwrite Rust tools adapter
+        {
+          "simrat39/rust-tools.nvim",
+          optional = true,
+          opts = function()
+            local extension_path = "${pkgs.vscode-extensions.vadimcn.vscode-lldb}/share/vscode/extensions/vadimcn.vscode-lldb/"
+            local codelldb_path = extension_path .. 'adapter/codelldb'
+            local liblldb_path = extension_path .. 'lldb/lib/liblldb.so'
+            local adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path)
+            require("dap").adapters.codelldb = adapter
+            require("dap").adapters.rust = adapter
+            require("dap").configurations.rust = {
+              {
+                type = "rust",
+                request = "launch",
+                name = "codelldb",
+                program = function()
+                  local metadata_json = vim.fn.system "cargo metadata --format-version 1 --no-deps"
+                  local metadata = vim.fn.json_decode(metadata_json)
+                  local target_name = metadata.packages[1].targets[1].name
+                  local target_dir = metadata.target_directory
+                  return target_dir .. "/debug/" .. target_name
+                end,
+                args = function()
+                  local inputstr = vim.fn.input("Params: ", "")
+                  local params = {}
+                  local sep = "%s"
+                  for str in string.gmatch(inputstr, "([^" .. sep .. "]+)") do
+                    table.insert(params, str)
+                  end
+                  return params
+                end,
+              },
+            }
+            return {
+              dap = {
+                adapter = adapter
+              },
+              tools = {
+                inlay_hints = {
+                  -- nvim >= 0.10 has native inlay hint support,
+                  -- so we don't need the rust-tools specific implementation any longer
+                  auto = not vim.fn.has("nvim-0.10"),
+                },
+              }
+            }
+          end,
+        },
         -- change jdk version
         {
           "mfussenegger/nvim-jdtls",
@@ -73,6 +120,12 @@ in
             inlay_hints = { enabled = vim.fn.has("nvim-0.10") },
             -- ---@type lspconfig.options
             servers = {
+              marksman = {
+                mason = false,
+                cmd = {
+                  "${pkgs.marksman}/bin/marksman"
+                }
+              },
               clangd = {
                 mason = false,
                 cmd = {
@@ -88,7 +141,7 @@ in
               rust_analyzer = {
                 mason = false,
                 cmd = {
-                  "${pkgs.rust-analyzer}/bin/rust-analyzer}"
+                  "${pkgs.rust-analyzer}/bin/rust-analyzer"
                 }
               },
               lua_ls = {
