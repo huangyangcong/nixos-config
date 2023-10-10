@@ -41,6 +41,8 @@
       url = "github:huangyangcong/nur-packages";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    #foundry
+    foundry.url = "github:shazow/foundry.nix/monthly"; # Use monthly branch for permanent releases
     # Other packages
     zig.url = "github:mitchellh/zig-overlay";
   };
@@ -64,6 +66,7 @@
         inputs.neovim-nightly-overlay.overlay
         inputs.rust-overlay.overlays.default
         inputs.zig.overlays.default
+        inputs.foundry.overlay
         (import "${inputs.my-nur-packages}/overlay.nix")
         overlay-unstable
       ];
