@@ -46,6 +46,9 @@ in
     pkgs.aria2
     pkgs.xss-lock
 
+    #markdown
+    pkgs.marksman
+
     pkgs.neovim
     pkgs.stylua
 
@@ -64,6 +67,7 @@ in
     pkgs.cdt_3
     pkgs.leap_4
     pkgs.solang_0_3_2
+    pkgs.foundry-bin
 
     # JavaScript / TypeScript programming language
     pkgs.deno
@@ -81,10 +85,10 @@ in
     pkgs.openjdk17
 
     # Rust programming language
+    pkgs.cargo-nextest
     (pkgs.rust-bin.stable.latest.default.override {
-      extensions = [ "rust-src" "rustfmt" ];
+      extensions = [ "rust-src" "rustfmt" "rust-analyzer" "clippy" ];
     })
-    pkgs.rust-analyzer
 
     # Go programming language
     pkgs.go
@@ -127,6 +131,8 @@ in
     pkgs.terraform
     pkgs.telepresence2
 
+    pkgs.vscode-extensions.vadimcn.vscode-lldb
+
     (pkgs.python3.withPackages (p: with p; [
       ipython
       jupyter
@@ -165,9 +171,10 @@ in
 
   home.file.".gdbinit".source = ./gdbinit;
   home.file.".inputrc".source = ./inputrc;
-  home.file.".pip/pip.conf".source = ../../home-manager/python/pip.conf;
   imports = [
+    ../../home-manager/python/python.nix
     ../../home-manager/lazyvim/lazyvim.nix
+    ../../home-manager/rust/rust.nix
   ];
   xdg.configFile."i3/config".text = builtins.readFile ./i3;
   xdg.configFile."rofi/config.rasi".text = builtins.readFile ./rofi;
