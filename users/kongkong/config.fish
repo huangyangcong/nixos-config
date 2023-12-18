@@ -299,7 +299,7 @@ function wmcode
 end
 
 function wmexec -d "exec multisig in the wax PE"
-    cleos -u $WAX_MAIN_URL multisig exec msig.box $1 -p cpu.box -p msig.box
+    cleos -u $WAX_MAIN_URL multisig exec msig.box $argv[1] -p cpu.box -p msig.box
 end
 
 function wminfo
@@ -486,6 +486,9 @@ end
 # Modify our path to include our Go binaries
 contains $HOME/code/go/bin $fish_user_paths; or set -Ua fish_user_paths $HOME/code/go/bin
 contains $HOME/bin $fish_user_paths; or set -Ua fish_user_paths $HOME/bin
+contains $HOME/.npm-global/bin $fish_user_paths; or set -Ua fish_user_paths $HOME/.npm-global/bin
+contains $HOME/.npm-global/lib/node_modules $fish_user_paths; or set -Ua fish_user_paths $HOME/.npm-global/lib/node_modules
+contains $HOME/.yarn/bin $fish_user_paths; or set -Ua fish_user_paths $HOME/.yarn/bin
 
 # Exported variables
 if isatty

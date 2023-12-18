@@ -9,7 +9,7 @@ let
   manpager = (pkgs.writeShellScriptBin "manpager" (if isDarwin then ''
     sh -c 'col -bx | bat -l man -p'
   '' else ''
-    cat "$1" | col -bx | bat --language man --style plain
+    cat "$1"/ | col -bx | bat --language man --style plain
   ''));
 in
 {
@@ -28,6 +28,8 @@ in
   # not a huge list.
   home.packages = [
     # tools
+    pkgs.cmake
+    pkgs.wget
     pkgs.wget
     pkgs.bat
     pkgs.fd
@@ -48,8 +50,6 @@ in
 
     #markdown
     pkgs.marksman
-
-    pkgs.neovim
     pkgs.stylua
 
     pkgs.zigpkgs.master
@@ -171,6 +171,7 @@ in
 
   home.file.".gdbinit".source = ./gdbinit;
   home.file.".inputrc".source = ./inputrc;
+
   imports = [
     ../../home-manager/python/python.nix
     ../../home-manager/lazyvim/lazyvim.nix
@@ -186,6 +187,7 @@ in
   # Rectangle.app. This has to be imported manually using the app.
   xdg.configFile."rectangle/RectangleConfig.json".text = builtins.readFile ./RectangleConfig.json;
 
+
   # tree-sitter parsers
   # xdg.configFile."nvim/parser/proto.so".source = "${pkgs.tree-sitter-proto}/parser";
   # xdg.configFile."nvim/queries/proto/folds.scm".source =
@@ -194,6 +196,19 @@ in
   #   "${sources.tree-sitter-proto}/queries/highlights.scm";
   # xdg.configFile."nvim/queries/proto/textobjects.scm".source =
   #   ./textobjects.scm;
+
+  # https://github.com/nvim-treesitter/nvim-treesitter#i-get-query-error-invalid-node-type-at-position
+  xdg.dataFile."nvim/lazy/nvim-treesitter/parser".source =
+    let
+      parsers = pkgs.symlinkJoin {
+        name = "treesitter-parsers";
+        paths = (pkgs.vimPlugins.nvim-treesitter.withAllGrammars).dependencies;
+      };
+    in
+    "${parsers}/parser";
+
+  xdg.dataFile."nvim/lazy/telescope-fzf-native.nvim/build/libfzf.so".source = "${pkgs.telescope-fzf-native}/build/libfzf.so";
+
 
   #---------------------------------------------------------------------
   # Programs
@@ -218,6 +233,15 @@ in
       gs = "git status";
       gt = "git tag";
     };
+  };
+
+  programs.neovim = {
+    enable = true;
+    plugins = with pkgs.vimPlugins; [
+      lazy-nvim
+      nvim-treesitter.withAllGrammars
+      telescope-fzf-native-nvim
+    ];
   };
 
   programs.direnv = {

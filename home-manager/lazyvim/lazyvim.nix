@@ -1,7 +1,61 @@
 { inputs, config, pkgs, lib, ... }:
 let
+  telescope-fzf-native-nvim = pkgs.vimPlugins.telescope-fzf-native-nvim;
+  nvim-treesitter = pkgs.vimPlugins.nvim-treesitter.withAllGrammars;
+  treesitter-parsers-deps = pkgs.symlinkJoin {
+    name = "treesitter-parsers-deps";
+    paths = nvim-treesitter.dependencies;
+  };
 in
 {
+  xdg.configFile = {
+    "nvim/init.lua".text = ''
+      vim.opt.runtimepath:append("${nvim-treesitter}")
+      vim.opt.runtimepath:append("${treesitter-parsers-deps}")
+      vim.opt.runtimepath:append("${telescope-fzf-native-nvim}")
+      -- bootstrap lazy.nvim, LazyVim and your plugins
+      require("config.lazy")({
+        debug = false,
+        defaults = {
+          lazy = true,
+          -- cond = false,
+        },
+        nv = {
+          colorscheme = "onedark", -- colorscheme setting for either onedark.nvim or github-theme
+          codeium_support = false, -- enable codeium extension
+          copilot_support = false, -- enable copilot extension
+          coverage_support = true, -- enable coverage extension
+          dap_support = true, -- enable dap extension
+          none_ls = true,
+          lang = {
+            clangd = true, -- enable clangd and cmake extension
+            docker = true, -- enable docker extension
+            elixir = false, -- enable elixir extension
+            go = true, -- enable go extension
+            java = true, -- enable java extension
+            nodejs = true, -- enable nodejs (typescript, css, html, json) extension
+            python = true, -- enable python extension
+            ruby = false, -- enable ruby extension
+            rust = true, -- enable rust extension
+            terraform = false, -- enable terraform extension
+            tex = false, -- enable tex extension
+            yaml = true, -- enable yaml extension
+          },
+          rest_support = true, -- enable rest.nvim extension
+          test_support = true, -- enable test extension
+        },
+        performance = {
+          cache = {
+            enabled = true,
+          },
+        },
+      })
+      -- Add Treesitter Path
+      vim.opt.runtimepath = vim.opt.runtimepath + "${pkgs.vimPlugins.nvim-treesitter.withAllGrammars}"
+      -- treesitter compiler error fix
+      require("nvim-treesitter.install").compilers = { "clang++" }
+    '';
+  };
   home.file = {
     ".config/nvim" = {
       source = ./src;
@@ -104,7 +158,7 @@ in
         },
         -- set format for stylua
         {
-          "jose-elias-alvarez/null-ls.nvim",
+          "nvimtools/none-ls.nvim",
           opts = function(_, opts)
             local nls = require("null-ls")
             opts.sources = vim.list_extend(opts.sources, {

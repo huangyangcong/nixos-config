@@ -60,6 +60,7 @@ return function(opts)
       { import = "lazyvim.plugins.extras.lang.terraform", enabled = opts.nv.lang.terraform },
       { import = "lazyvim.plugins.extras.lang.tex", enabled = opts.nv.lang.tex },
       { import = "lazyvim.plugins.extras.lang.yaml", enabled = opts.nv.lang.yaml },
+      { import = "lazyvim.plugins.extras.lsp.none-ls", enabled = opts.nv.none_ls },
       -- lazyvim test core extension modules
       { import = "lazyvim.plugins.extras.test.core", enabled = opts.nv.test_support },
       -- lazyvim UI extension modules
@@ -68,7 +69,6 @@ return function(opts)
       -- lazyvim project extension modules
       { import = "lazyvim.plugins.extras.util.project" },
       -- import/override with your plugins
-      { import = "plugins" },
       { import = "plugins.lang_extra" },
       -- lazyvim codeium extension modules
       { import = "plugins.extras.coding.codeium", enabled = opts.nv.codeium_support },
@@ -78,6 +78,17 @@ return function(opts)
       { import = "plugins.extras.test.coverage", enabled = opts.nv.lang.coverage_support },
       -- lazyvim REST extension modules
       { import = "plugins.extras.util.rest", enabled = opts.nv.lang.rest_support },
+
+      -- The following configs are needed for fixing lazyvim on nix
+      -- force enable telescope-fzf-native.nvim
+      -- { "nvim-telescope/telescope-fzf-native.nvim", enabled = true },
+      -- disable mason.nvim, use programs.neovim.extraPackages
+      -- { "williamboman/mason-lspconfig.nvim", enabled = false },
+      -- { "williamboman/mason.nvim", enabled = false },
+      -- import/override with your plugins
+      { import = "plugins" },
+      -- treesitter handled by xdg.configFile."nvim/parser", put this line at the end of spec to clear ensure_installed
+      { "nvim-treesitter/nvim-treesitter", opts = { ensure_installed = {} } },
     },
     defaults = {
       -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.

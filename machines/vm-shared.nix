@@ -92,6 +92,7 @@
 
   environment.variables = {
     GLFW_IM_MODULE = "ibus"; # Ibus & Fcitx5 solution..
+    NPM_CONFIG_PREFIX = "~/.npm-global";
   };
 
   # Select internationalisation properties.
@@ -201,6 +202,16 @@
     # if the clipboard sill works.
     gtkmm3
   ];
+
+  # Allowed shells.
+  environment.shells = with pkgs;[ bashInteractive fish ];
+
+  system.activationScripts = {
+    bashsh.text =
+      ''
+        ln -sf /run/current-system/sw/bin/bash /bin/bash
+      '';
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
