@@ -1,5 +1,5 @@
 # Connectivity info for Linux VM
-NIXADDR ?= 192.168.182.130
+NIXADDR ?= 192.168.182.128
 NIXPORT ?= 22
 NIXUSER ?= kongkong
 

@@ -198,14 +198,14 @@ in
   #   ./textobjects.scm;
 
   # https://github.com/nvim-treesitter/nvim-treesitter#i-get-query-error-invalid-node-type-at-position
-  xdg.dataFile."nvim/lazy/nvim-treesitter/parser".source =
-    let
-      parsers = pkgs.symlinkJoin {
-        name = "treesitter-parsers";
-        paths = (pkgs.vimPlugins.nvim-treesitter.withAllGrammars).dependencies;
-      };
-    in
-    "${parsers}/parser";
+  #xdg.dataFile."nvim/lazy/nvim-treesitter/parser".source =
+  #  let
+  #    parsers = pkgs.symlinkJoin {
+  #      name = "treesitter-parsers";
+  #      paths = (pkgs.vimPlugins.nvim-treesitter.withAllGrammars).dependencies;
+  #    };
+  #  in
+  #  "${parsers}/parser";
 
   xdg.dataFile."nvim/lazy/telescope-fzf-native.nvim/build/libfzf.so".source = "${pkgs.telescope-fzf-native}/build/libfzf.so";
 
